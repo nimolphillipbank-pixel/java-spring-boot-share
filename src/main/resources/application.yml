@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    default: local,db_local,cache_local
+
+logging:
+  level:
+    com.bestpractice.api: INFO
