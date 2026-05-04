@@ -2,6 +2,8 @@ package com.app.controllers.v1;
 
 import com.app.domain.component.RequestInfoComponent;
 import com.app.domain.model.AuthorizationResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v2/authorization")
+@Tag(name = "Authorization", description = "Authorization validation endpoints")
 public class AuthorizationController {
   private final RequestInfoComponent requestInfo;
 
@@ -21,6 +24,7 @@ public class AuthorizationController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @GetMapping
+  @Operation(summary = "Get authorization context")
   public AuthorizationResponse authorize() {
     return new AuthorizationResponse(
         this.requestInfo.getClientId() != null && !this.requestInfo.getClientId().isBlank(),

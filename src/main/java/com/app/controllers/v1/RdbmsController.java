@@ -3,6 +3,8 @@ package com.app.controllers.v1;
 import com.app.domain.model.InfoRequest;
 import com.app.domain.model.InfoResponse;
 import com.app.domain.service.impl.InfoServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/infos")
+@Tag(name = "Infos", description = "Info CRUD endpoints")
 public class RdbmsController {
 
     private final InfoServiceImpl infoService;
@@ -29,16 +32,19 @@ public class RdbmsController {
     }
 
     @GetMapping()
+    @Operation(summary = "List infos")
     public List<InfoResponse> getInfos() {
         return this.infoService.getInfos();
     }
 
     @GetMapping(value="/{id}")
+    @Operation(summary = "Get info by id")
     public InfoResponse getInfo(@PathVariable("id") String id) {
         return this.infoService.getInfo(id);
     }
 
     @PostMapping
+    @Operation(summary = "Create info")
     public ResponseEntity<InfoResponse> postInfo(
         @RequestBody InfoRequest req)
         throws URISyntaxException {
@@ -50,6 +56,7 @@ public class RdbmsController {
     }
 
     @PutMapping(value="/{id}")
+    @Operation(summary = "Update info")
     public InfoResponse putInfo(
         @PathVariable("id") String id,
         @RequestBody InfoRequest req) {
@@ -58,6 +65,7 @@ public class RdbmsController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Delete info")
     public Map<String, String> deleteInfo(@PathVariable("id") String id) {
         this.infoService.deleteInfo(id);
         return Collections.singletonMap("message", "ok");

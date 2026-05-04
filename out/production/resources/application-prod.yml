@@ -2,9 +2,10 @@
 # Independents datasource
 
 credentials:
+    client-id: bestpractice-client
     provider: best-practice
     subject: localhost
     alg: HS512
-    key: apikey
+    secret-key: apikey
     hmac-secret: test-secret
     expires-hour-str: 1

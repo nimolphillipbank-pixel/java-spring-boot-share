@@ -5,6 +5,8 @@ import com.app.domain.model.AuthByEmailRequest;
 import com.app.domain.model.AuthByRefreshTokenRequest;
 import com.app.domain.model.AuthResponse;
 import com.app.domain.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Auth", description = "Authentication endpoints")
 public class AuthController {
 
   private final AuthService authService;
@@ -29,6 +32,7 @@ public class AuthController {
   }
 
   @RequestMapping(method= RequestMethod.OPTIONS)
+  @Operation(summary = "Auth options", description = "Returns allowed methods for auth endpoint")
   public ResponseEntity<Object> optionsAuth() {
     HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.set("Allow", "POST,OPTIONS");
@@ -42,6 +46,7 @@ public class AuthController {
   @ResponseBody
   @ResponseStatus(value = HttpStatus.OK)
   @PostMapping(value = "/email-login")
+  @Operation(summary = "Login by email and password")
   public AuthResponse login(
       @RequestBody @Validated AuthByEmailRequest request,
       BindingResult bdResult) {
@@ -55,6 +60,7 @@ public class AuthController {
   @ResponseBody
   @ResponseStatus(value = HttpStatus.OK)
   @PostMapping(value = "/refreshtoken-login")
+  @Operation(summary = "Login by refresh token")
   public AuthResponse login(
       @RequestBody @Validated AuthByRefreshTokenRequest request,
       BindingResult bdResult) {

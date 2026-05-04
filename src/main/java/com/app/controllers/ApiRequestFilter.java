@@ -21,7 +21,10 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 public class ApiRequestFilter extends OncePerRequestFilter {
   private static final Logger logger = LoggerFactory.getLogger(ApiRequestFilter.class);
   private static final String SPRING_ERROR_PATH = "/error";
-  private static final List<String> DISABLE_AUTH_ENDPOINTS = List.of("/api/v1/user", "/api/v1/auth");
+  private static final List<String> PUBLIC_ENDPOINT_PREFIXES = List.of(
+      "/api/v1/user",
+      "/api/v1/auth",
+      "/api/v1/hello");
   private static final String CLIENT_ID_HEADER = "X-Client-Id";
   private static final String SECRET_KEY_HEADER = "X-Secret-Key";
 
@@ -78,7 +81,7 @@ public class ApiRequestFilter extends OncePerRequestFilter {
     }
 
     authorizeClient(request, accessLogBuilder);
-    if (DISABLE_AUTH_ENDPOINTS.contains(this.requestInfo.getPath())
+    if (PUBLIC_ENDPOINT_PREFIXES.stream().anyMatch(this.requestInfo.getPath()::startsWith)
         || this.environment.matchesProfiles("local")) {
       return;
     }

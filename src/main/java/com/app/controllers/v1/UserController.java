@@ -4,6 +4,8 @@ import com.app.common.exception.BadRequest;
 import com.app.domain.model.UserRequest;
 import com.app.domain.model.UserResponse;
 import com.app.domain.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@Tag(name = "User", description = "User endpoints")
 public class UserController {
 
   private final UserService userService;
@@ -27,6 +30,7 @@ public class UserController {
   @ResponseBody
   @ResponseStatus(value = HttpStatus.CREATED)
   @PostMapping()
+  @Operation(summary = "Create user", description = "Public endpoint for user registration")
   public UserResponse createUser(
       @RequestBody @Validated UserRequest request,
       BindingResult bdResult) {

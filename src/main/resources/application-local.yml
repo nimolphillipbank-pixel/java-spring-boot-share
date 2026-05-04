@@ -9,3 +9,7 @@ credentials:
     secret-key: apikey
     hmac-secret: test-secret
     expires-hour-str: 1
+
+app:
+    swagger:
+        server-url: http://localhost:8080
